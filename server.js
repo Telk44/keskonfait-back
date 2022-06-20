@@ -1,22 +1,3 @@
-// const express = require('express')
-// const app = require("./app");
-// const port = 3000
-//
-//
-//
-// app.get('/user', (req, res) => {
-//     res.send('Hello Keskonfait')
-// })
-//
-//
-//
-// app.use('/user', require('./routes/user'));
-//
-// app.listen(port, () => {
-//     console.log(`appli tourne sur le port ${port}`)
-// })
-
-
 const http = require("http");
 const app = require("./app");
 

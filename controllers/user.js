@@ -31,8 +31,9 @@ exports.signup = (req, res) => {
                             password : hash,
                             lastName : req.body.lastName,
                             firstName : req.body.firstName,
-                            username : req.body.username,
-                            role: req.body.role
+                            userName : req.body.userName,
+                            isAdmin: req.body.isAdmin,
+                            isVerified: req.body.isVerified
                         })
                             .then((user) => {
                                 console.log(user)
@@ -64,7 +65,8 @@ exports.login = (req, res, next) => {
                             'process.env.DB_TOKEN',
                             { expiresIn: '24h' }
                         ),
-                        role: user.role
+                        isAdmin: user.isAdmin,
+                        isVerified: user.isVerified
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
@@ -96,7 +98,9 @@ exports.modifyAccount = (req, res) => {
     User.update({
         lastName: req.body.lastName,
         firstName: req.body.firstName,
-        username: req.body.username
+        userName: req.body.userName,
+        isVerified:req.body.isVerified,
+        isAdmin:req.body.isAdmin
     }, {
         where: {
             id: req.params.id

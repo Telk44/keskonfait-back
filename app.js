@@ -10,7 +10,7 @@ db.sequelize
     .then(() => {
         console.log('connexion à la bdd ok');
         db.sequelize.sync({
-            /* force:true */
+             // force:true
         })
     })
     .catch(error => {

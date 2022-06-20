@@ -14,10 +14,6 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
@@ -26,8 +22,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      role: {
+      userName: {
+        allowNull: false,
         type: Sequelize.STRING
+      },
+      isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
+      isVerified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,
