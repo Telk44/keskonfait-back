@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user");
 db.sequelize
     .authenticate()
     .then(() => {
-        console.log('connexion à la base de données ok');
+        console.log('connexion à la bdd ok');
         db.sequelize.sync({
             /* force:true */
         })

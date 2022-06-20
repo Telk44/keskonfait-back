@@ -3,20 +3,20 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
 require('dotenv').config();
 
-const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}/;
-const regexPassword = /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+// const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}/;
+// const regexPassword = /^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 
-// inscription nouvel utilisateur (ok)
-exports.signup = (req, res, next) => {
-    if (req.body.email == null || req.body.password == null || req.body.username == null) {
-        return res.status(400).json({ 'error': 'Données incomplètes' });
-    }
-    if (!regexEmail.test(req.body.email)) {
-        return res.status(400).json({ 'error': 'Données non valides' });
-    }
-    if (!regexPassword.test(req.body.password)) {
-        return res.status(400).json({ 'error': 'Mot de passe non validé' });
-    }
+// inscription new user(ok)
+exports.signup = (req, res) => {
+    // if (req.body.email == null || req.body.password == null || req.body.username == null) {
+    //     return res.status(400).json({ 'error': 'empty space' });
+    // }
+    // if (!regexEmail.test(req.body.email)) {
+    //     return res.status(400).json({ 'error': 'mail error' });
+    // }
+    // if (!regexPassword.test(req.body.password)) {
+    //     return res.status(400).json({ 'error': 'password error' });
+    // }
     User.findOne({
         attributes: ['email'],
         where: { email: req.body.email }
@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
                 bcrypt.hash(req.body.password, 10)
                     .then(hash => {
                         console.log(hash)
-                         User.create ({
+                        User.create ({
                             email: req.body.email,
                             password : hash,
                             lastName : req.body.lastName,
@@ -36,13 +36,13 @@ exports.signup = (req, res, next) => {
                         })
                             .then((user) => {
                                 console.log(user)
-                                res.status(201).json({ message: 'Utilisateur créé !' })
+                                res.status(201).json({ message: 'user ok !' })
                             });
                     })
                     .catch(error => res.status(400).json({ error }));
             }})
 
-        .catch(error => res.status(500).json({ 'error': 'Utilisateur déjà existant' }));
+        .catch(error => res.status(500).json({ 'error': 'user already exists' }));
 };
 
 // Fonction login (ok)
@@ -72,7 +72,6 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-
 // Suppression d'un compte
 exports.deleteAccount = (req, res, next) => {
     User.findOne({ where: { id: req.params.id }})
@@ -91,28 +90,29 @@ exports.getOneAccount = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));
 };
 
-// Modification d'un compte
-exports.modifyAccount = (req, res, next) => {
-    User.findOne({ where: { id: req.params.id }})
-        .then((user) => {
-            lastName = req.body.lastName;
-            firstName = req.body.firstName;
-            username = req.body.username;
-            User.update()
-                .then(() => res.status(201).json({ message: 'Compte modifié !' }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-};
+// Modification d'un compte (ok)
 
-
+exports.modifyAccount = (req, res) => {
+    User.update({
+        lastName: req.body.lastName,
+        firstName: req.body.firstName,
+        username: req.body.username
+    }, {
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(response => res.status(200).json({
+            message: "account modified"
+        }))
+        .catch(error => console.log("ERROR when updateValue"));
+}
 
 
 //récupération tous les comptes
 exports.getAllAccounts = (req, res, next) => {
     User.findAll()
         .then((users) => res.status(200).json(users))
-    // console.log(users)
+        // console.log(users)
         .catch(error => res.status(400).json({ error }));
 };
-
