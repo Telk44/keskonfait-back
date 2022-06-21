@@ -11,4 +11,8 @@ router.get('/:id', auth, userCtrl .getOneAccount);
 router.put('/:id', auth, userCtrl .modifyAccount);
 router.get('/',  userCtrl .getAllAccounts);
 
+router.get('/secret-route', (req, res, next) => {
+    res.send('This is the secret content. Only logged in users can see that!');
+});
+
 module.exports = router;

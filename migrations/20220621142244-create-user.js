@@ -14,16 +14,15 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
+      userName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
       },
       password: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      userName: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       isAdmin: {
@@ -33,6 +32,13 @@ module.exports = {
       isVerified: {
         type: Sequelize.BOOL,
         defaultValue: true
+      },
+      token: {
+        type: Sequelize.STRING
+      },
+      active: {
+        type: Sequelize.INT,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

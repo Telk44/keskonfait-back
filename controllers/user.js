@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
+const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 // const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}/;
@@ -17,6 +18,7 @@ exports.signup = (req, res) => {
     // if (!regexPassword.test(req.body.password)) {
     //     return res.status(400).json({ 'error': 'password error' });
     // }
+
     User.findOne({
         attributes: ['email'],
         where: { email: req.body.email }
@@ -33,7 +35,12 @@ exports.signup = (req, res) => {
                             firstName : req.body.firstName,
                             userName : req.body.userName,
                             isAdmin: req.body.isAdmin,
-                            isVerified: req.body.isVerified
+                            isVerified: req.body.isVerified,
+                            token: jwt.sign(
+                                { email: req.body.email },
+                                'process.env.DB_TOKEN',
+                                { expiresIn: '24h' }
+                            ),
                         })
                             .then((user) => {
                                 console.log(user)
@@ -52,6 +59,11 @@ exports.login = (req, res, next) => {
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur inconnu !' });
+            }
+            if (user.active != 1) {
+                return res.status(401).send({
+                    message: "Pending Account. Please Verify Your Email!",
+                });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
