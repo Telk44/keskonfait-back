@@ -29,6 +29,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(helmet());
 
-app.use('/', userRoutes);
+app.use('/auth', userRoutes);
 
 module.exports = app;

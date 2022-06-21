@@ -37,7 +37,7 @@ exports.signup = (req, res) => {
                         })
                             .then((user) => {
                                 console.log(user)
-                                res.status(201).json({ message: 'user ok !' })
+                                res.status(201).json({ message: 'utilisateur créé !' })
                             });
                     })
                     .catch(error => res.status(400).json({ error }));
