@@ -3,11 +3,11 @@ require('dotenv').config();
 
 module.exports = (req, res, next) => {
     // username min length 3
-    if (!req.body.userName || req.body.userName.length < 3) {
-        return res.status(400).send({
-            msg: "Please enter a username with min. 3 chars",
-        });
-    }
+    // if (!req.body.userName || req.body.userName.length < 3) {
+    //     return res.status(400).send({
+    //         msg: "Please enter a username with min. 3 chars",
+    //     });
+    // }
     // valide email
     if (!req.body.email || !validator.validate(req.body.email)) {
         return res.status(400).send({
@@ -31,4 +31,5 @@ module.exports = (req, res, next) => {
         });
     }
     next();
+
 }

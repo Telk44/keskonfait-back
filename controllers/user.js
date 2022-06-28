@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/index');
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 // const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}/;
@@ -24,33 +24,34 @@ exports.signup = (req, res) => {
         where: { email: req.body.email }
     })
         .then((user) => {
-            if (!user) {
-                bcrypt.hash(req.body.password, 10)
-                    .then(hash => {
-                        console.log(hash)
-                        User.create ({
-                            email: req.body.email,
-                            password : hash,
-                            lastName : req.body.lastName,
-                            firstName : req.body.firstName,
-                            userName : req.body.userName,
-                            isAdmin: req.body.isAdmin,
-                            isVerified: req.body.isVerified,
-                            token: jwt.sign(
-                                { email: req.body.email },
-                                'process.env.DB_TOKEN',
-                                { expiresIn: '24h' }
-                            ),
-                        })
-                            .then((user) => {
-                                console.log(user)
-                                res.status(201).json({ message: 'utilisateur créé !' })
-                            });
+            if (user) {
+                return res.status(400).json({ 'error': 'user already exists' })
+            }
+            bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    console.log(hash)
+                    User.create ({
+                        email: req.body.email,
+                        password : hash,
+                        lastName : req.body.lastName,
+                        firstName : req.body.firstName,
+                        userName : req.body.userName,
+                        isAdmin: req.body.isAdmin,
+                        isVerified: req.body.isVerified,
+                        // token: jwt.sign(
+                        //     { email: req.body.email },
+                        //     'process.env.DB_TOKEN',
+                        //     { expiresIn: '24h' }
+                        // ),
                     })
-                    .catch(error => res.status(400).json({ error }));
-            }})
+                        .then((user) => {
+                            console.log(user)
+                            res.status(201).json({ message: 'utilisateur créé !' })
+                        });
+                })
+                .catch(error => res.status(400).json({ error }));
+        })
 
-        .catch(error => res.status(500).json({ 'error': 'user already exists' }));
 };
 
 // Fonction login (ok)
@@ -60,11 +61,11 @@ exports.login = (req, res, next) => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur inconnu !' });
             }
-            if (user.active != 1) {
-                return res.status(401).send({
-                    message: "Pending Account. Please Verify Your Email!",
-                });
-            }
+            // if (user.active != 1) {
+            //     return res.status(401).send({
+            //         message: "Pending Account. Please Verify Your Email!",
+            //     });
+            // }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
@@ -77,8 +78,9 @@ exports.login = (req, res, next) => {
                             'process.env.DB_TOKEN',
                             { expiresIn: '24h' }
                         ),
-                        isAdmin: user.isAdmin,
-                        isVerified: user.isVerified
+                        // isAdmin: user.isAdmin,
+                        // isVerified: user.isVerified
+
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
