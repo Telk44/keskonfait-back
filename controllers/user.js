@@ -38,18 +38,26 @@ exports.signup = (req, res) => {
                         userName : req.body.userName,
                         isAdmin: req.body.isAdmin,
                         isVerified: req.body.isVerified,
-                        // token: jwt.sign(
-                        //     { email: req.body.email },
-                        //     'process.env.DB_TOKEN',
-                        //     { expiresIn: '24h' }
-                        // ),
+                        token: jwt.sign(
+                            { email: req.body.email },
+                            'process.env.DB_TOKEN',
+                            { expiresIn: '24h' }
+                        ),
                     })
                         .then((user) => {
                             console.log(user)
-                            res.status(201).json({ message: 'utilisateur créé !' })
+                            res.status(201).json({
+                                userId: user.id,
+                                email: req.body.email,
+                                userName : req.body.userName,
+                                token: jwt.sign(
+                                    { email: req.body.email },
+                                    'process.env.DB_TOKEN',
+                                    { expiresIn: '24h' }
+                                ) })
                         });
                 })
-                .catch(error => res.status(400).json({ error }));
+                .catch(error => res.status(400).json({ message: 'invalid form!'}));
         })
 };
 
