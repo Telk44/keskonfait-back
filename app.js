@@ -2,16 +2,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const path = require('path');
 const helmet = require('helmet');
-const db = require('./models');
+const {sequelize, Activity, Age} = require('./models');
 const userRoutes = require("./routes/user");
+const activityRoutes = require("./routes/activity");
+const { Op } = require("sequelize");
 
-db.sequelize
+sequelize
     .authenticate()
     .then(() => {
         console.log('connexion à la bdd ok');
-        db.sequelize.sync({
-             // force:true
+        sequelize.sync({
+            // force:true
+
         })
+        console.log(Activity.associations)
+
+
+
     })
     .catch(error => {
         console.log(error);
@@ -31,5 +38,6 @@ app.use(bodyParser.json());
 app.use(helmet());
 
 app.use('/auth', userRoutes);
+app.use('/activity', activityRoutes);
 
 module.exports = app;
