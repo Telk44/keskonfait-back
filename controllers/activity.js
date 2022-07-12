@@ -71,6 +71,27 @@ exports.deleteActivity = (req, res, next) => {
 
 
 //Modifier une activité
+exports.updateActivity = (req, res, next) => {
+    Activity.update({
+        categoryId: req.body.categoryId,
+        title: req.body.title,
+        description: req.body.description,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        price: req.body.price,
+        phone: req.body.phone,
+        bookingEmail: req.body.bookingEmail,
+    }, {
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(response => res.status(200).json({
+            message: "Activité modifiée"
+        }))
+        .catch(error => res.status(404).json({ error }));
+}
+
 
 //Trouver une activité par Id
 exports.getOneActivity = (req, res, next) => {

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../models');
 require('dotenv').config();
 
-const { User } = db.sequelize.models
+// const { User } = db.sequelize.models
 
 module.exports = (req, res, next) => {
     try {
