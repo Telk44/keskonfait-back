@@ -13,12 +13,8 @@ sequelize
         console.log('connexion à la bdd ok');
         sequelize.sync({
             // force:true
-
         })
         console.log(Activity.associations)
-
-
-
     })
     .catch(error => {
         console.log(error);
