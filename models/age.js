@@ -8,11 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       console.log(models)
       Age.Activities = Age.belongsToMany(models.Activity, {
-        through: "age_activity",
+        through: "AgeActivity",
         as:"activities",
         foreignKey:"ageId"
       })
-      // define association here
     }
   }
   Age.init({
