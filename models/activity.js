@@ -28,11 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     Activity.init({
+        imageUrl: DataTypes.STRING,
         title: DataTypes.STRING,
         description: DataTypes.STRING,
         startDate: DataTypes.DATE,
         endDate: DataTypes.DATE,
-        price: DataTypes.FLOAT,
+        price: DataTypes.STRING,
+        // price: DataTypes.FLOAT,
         phone: DataTypes.STRING,
         bookingEmail: DataTypes.STRING
     }, {

@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const path = require('path');
+const path = require('path');
 const helmet = require('helmet');
-const {sequelize, Activity, Age} = require('./models');
+const {sequelize} = require('./models');
 const userRoutes = require("./routes/user");
 const activityRoutes = require("./routes/activity");
-const { Op } = require("sequelize");
 
 sequelize
     .authenticate()
@@ -14,14 +13,12 @@ sequelize
         sequelize.sync({
             // force:true
         })
-        console.log(Activity.associations)
     })
     .catch(error => {
         console.log(error);
     });
 
 const app = express();
-
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -35,5 +32,10 @@ app.use(helmet());
 
 app.use('/auth', userRoutes);
 app.use('/activity', activityRoutes);
+
+//static Images Folder
+
+// app.use('/Images', express.static('./Images'))
+
 
 module.exports = app;

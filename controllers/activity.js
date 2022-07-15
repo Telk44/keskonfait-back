@@ -5,7 +5,9 @@ const {Op} = require("sequelize");
 
 exports.createActivity = (req, res, next) => {
     const ages = req.body.ages
+
     const activityData = {
+        // image: req.file.path,
         userId: req.body.userId,
         categoryId: req.body.categoryId,
         title: req.body.title,
@@ -16,6 +18,7 @@ exports.createActivity = (req, res, next) => {
         phone: req.body.phone,
         bookingEmail: req.body.bookingEmail,
     };
+    console.log(activityData)
     Activity.create(activityData)
         .then(result => {
             // console.log("result", result)
@@ -122,4 +125,3 @@ exports.getOneActivity = (req, res, next) => {
         .then(message => res.status(200).json(message))
         .catch(error => res.status(404).json({ error }));
 };
-

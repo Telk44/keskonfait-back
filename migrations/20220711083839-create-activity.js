@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INT
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+      },
       title: {
         type: Sequelize.STRING,
         // allowNull: false,
@@ -25,7 +28,8 @@ module.exports = {
         // allowNull: false,
       },
       price: {
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
+        // type: Sequelize.FLOAT
       },
       phone: {
         type: Sequelize.STRING,
