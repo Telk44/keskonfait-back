@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         startDate: DataTypes.DATE,
         endDate: DataTypes.DATE,
         price: DataTypes.STRING,
-        // price: DataTypes.FLOAT,
         phone: DataTypes.STRING,
         bookingEmail: DataTypes.STRING
     }, {

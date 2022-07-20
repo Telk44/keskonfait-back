@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       Age.Activities = Age.belongsToMany(models.Activity, {
         through: "AgeActivity",
         as:"activities",
-        foreignKey:"ageId"
+        // foreignKey:"ageId"
       })
     }
   }
