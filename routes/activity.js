@@ -8,5 +8,6 @@ router.get('/', activityCtrl.findAllActivities);
 router.delete('/:id', activityCtrl.deleteActivity);
 router.get('/:id', activityCtrl.getOneActivity);
 router.patch('/:id', activityCtrl.updateActivity);
+router.get('/user/:id', auth, activityCtrl.getUserActivities);
 
 module.exports = router;

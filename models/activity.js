@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
                     onDelete: 'CASCADE',
                     onUpdate: 'CASCADE'
                 });
-            Activity.belongsToMany(models.Age, {
-                through: "AgeActivity",
-                as: "ages",
-                foreignKey: "activityId"
+            Activity.belongsTo(models.Age, {
+                foreignKey: "activityId",
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             })
         }
     }
@@ -41,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Activity',
         tableName: 'Activities'
     });
-    // console.log("user", User.create)
 
     return Activity;
 };

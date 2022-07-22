@@ -1,10 +1,10 @@
-const {Activity } = require('../models/index');
-const {Op} = require("sequelize");
+const {Activity, User, Age, Category } = require('../models');
+const {Op, where} = require("sequelize");
 const getAuthUserId = require("../middleware/getAuthUserId");
 const fs = require('fs');
 
 
-// Création d'une activité
+// Création d'une activité(test ok)
 
 exports.createActivity = (req, res, next) => {
 
@@ -84,31 +84,22 @@ exports.createActivity = (req, res, next) => {
 }
 
 
-//Liste de toutes les activités
+//Liste de toutes les activités(test ok)
 
 exports.findAllActivities = (req, res, next) => {
-    Activity.findAll({
-        include: [
-            {
-                model: Age,
-                as: "ages",
-                attributes: ["id", "childrenAge"],
-                through: {
-                    attributes: [],
-                }
-            },
-            {
-                model: User,
-                as: "user",
-                attributes: ["id", "userName"], //info du user que je veux récupérer
-            }, "Category"
-        ],
-        order: [['createdAt', 'ASC']] //trier en fonction de startDate après
-    })
+    Activity.findAll()
         .then((activities) => res.status(200).json(activities))
-
         .catch(error => res.status(400).json({error}))
 }
+
+// Liste de toutes les activités d'un utilisateur(test ok)
+
+exports.getUserActivities = (req, res, next) => {
+    Activity.findAll({ where: {userId:req.params.id}})
+        .then((activities) => res.status(200).json(activities))
+        .catch(error => res.status(400).json({error}))
+}
+
 
 //Supprimer une activité
 

@@ -7,10 +7,8 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       console.log(models)
-      Age.Activities = Age.belongsToMany(models.Activity, {
-        through: "AgeActivity",
-        as:"activities",
-        // foreignKey:"ageId"
+      Age.Activities = Age.hasMany(models.Activity, {
+        foreignKey:"ageId"
       })
     }
   }

@@ -17,19 +17,19 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
-        // allowNull: false,
+
       },
       startDate: {
         type: Sequelize.DATE,
-        // allowNull: false,
+
       },
       endDate: {
         type: Sequelize.DATE,
-        // allowNull: false,
+
       },
       price: {
         type: Sequelize.STRING
-        // type: Sequelize.FLOAT
+
       },
       phone: {
         type: Sequelize.STRING,
@@ -37,7 +37,6 @@ module.exports = {
       },
       bookingEmail: {
         type: Sequelize.STRING,
-        // allowNull: false,
       },
       createdAt: {
         allowNull: false,
